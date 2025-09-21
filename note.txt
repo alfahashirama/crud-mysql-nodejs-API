@@ -1,0 +1,11 @@
+
+docker volume create mysql8-data
+docker network create network_flask_mysql
+
+docker run -d --name mysql8-container --network network_flask_mysql-e MYSQL_ROOT_PASSWORD=nasandratra -e MYSQL_DATABASE=mybooks -e MYSQL_USER=alfa -e MYSQL_PASSWORD=nasandratra -v mysql8-data:/var/lib/mysql -p 3306:3306 mysql:8
+docker exec -it mysql8-container mysql -u alfa -p
+docker run -d \
+  --name crud-app \
+  --network network_flask_mysql \
+  -p 5000:5000 \
+  rds-mysql-python:0.0.1.RELEASE
